@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CODE16384 - Developer Portal</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;500;600&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <div class="matrix-background" id="matrixBackground"></div>
+    <header>
+        <nav class="nav-container">
+            <div class="container">
+                <div class="logo">CODE16384</div>
+                <div class="menu-toggle" id="menuToggle">
+                    <div class="hamburger"></div>
+                </div>
+                <div class="nav-links">
+                    <a href="#code">Contract</a>
+                    <a href="#stats">Stats</a>
+                    <a href="https://t.me/code16384" target="_blank">Telegram</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="hero-container">
+            <div class="terminal-display">
+                <div class="terminal-header">
+                    <span class="system-status">SYSTEM://CODE16384</span>
+                    <span class="timestamp" id="terminal-time">00:00:00 UTC</span>
+                </div>
+
+                <div class="display-content">
+                    <div class="status-grid">
+                        <div class="status-item">
+                            <span class="label">SUPPLY</span>
+                            <span class="value" id="supplyCounter">16384</span>
+                        </div>
+                        <div class="status-item">
+                            <span class="label">BURN RATE</span>
+                            <span class="value">4%</span>
+                        </div>
+                        <div class="status-item">
+                            <span class="label">HOLDERS</span>
+                            <span class="value" id="holders-count">SCANNING...</span>
+                        </div>
+                    </div>
+
+                    <div class="protocol-alert">
+                        // SPDX-License-Identifier: MIT <br>
+                        /* <br>
+                        CODE16384
+                        A unique token with only 16384 whole units
+                        A unique token with only 16384 whole units
+                        - No fractional units (only whole numbers)
+                        - 0% buy tax, 5% sell tax (4% burn)
+                        - Automated burn system:
+                        • Burns 1 token every 2nd/4th/8th/16th/32nd sale
+                        • Additional burn every 8 hours or 2048 trades
+                        True scarcity through systematic burning
+                        True scarcity through systematic burning <br>
+                        */
+                    </div>
+
+                    <div class="protocol-alert">
+                        <div class="alert-title">[ AIRDROP PROTOCOL INITIALIZED ]</div>
+                        <div class="alert-details">
+                            <span class="detail-item">• TARGET: 100 HOLDERS</span>
+                            <span class="detail-item">• REWARD: 1% LP / HOUR</span>
+                            <span class="detail-item">• MINIMUM: 16.384 TOKENS</span>
+                            <span class="detail-item">• STATUS: PENDING</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="stats" id="stats">
+        <div class="terminal-display">
+            <div class="terminal-header">
+                <span class="system-status">SYSTEM://STATISTICS</span>
+                <span class="timestamp">REAL-TIME DATA</span>
+            </div>
+            <div class="display-content">
+                <div class="status-grid">
+                    <div class="status-item">
+                        <span class="label">BURNED TOKENS</span>
+                        <span class="value" id="burnedTokens">SCANNING...</span>
+                    </div>
+                    <div class="status-item">
+                        <span class="label">LP BALANCE</span>
+                        <span class="value" id="lpTokens">SCANNING...</span>
+                    </div>
+                    <div class="status-item">
+                        <span class="label">HOLDERS</span>
+                        <span class="value" id="nextBurn">SCANNING...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="code-section" id="code">
+        <div class="terminal-display">
+            <div class="terminal-header">
+                <span class="system-status">SYSTEM://CONTRACT</span>
+                <span class="timestamp">BURN MECHANISM</span>
+            </div>
+            <div class="display-content">
+                <div class="code-container">
+                    <div class="code-header">
+                        <span class="file-path">./contracts/BurnMechanism.sol</span>
+                        <span class="compiler-version">SPDX-License-Identifier: MIT</span>
+                    </div>
+                    <pre><code class="language-solidity">
+function autoBurnLiquidityPairTokens() internal {
+    uint256 liquidityPairBalance = balanceOf(uniswapV2Pair);
+
+    if (liquidityPairBalance > 256) {
+        if (sellAmountCounter < 1024) {
+            if (block.timestamp < lastLpBurnTime + lpBurnFrequency) {
+                return;
+            } else {
+                lastLpBurnTime = block.timestamp;
+            }
+        } else {
+            sellAmountCounter = 0;
+        }
+
+        super._transfer(uniswapV2Pair, address(0xdead), 1);
+        
+        IUniswapV2Pair pair = IUniswapV2Pair(uniswapV2Pair);
+        pair.sync();
+        emit AutoNukeLP();
+    }
+}</code></pre>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>© 2025 CODE16384. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-solidity.min.js"></script>
+    <script src="js/main.js"></script>
+    <script src="https://unpkg.com/scrollreveal"></script>
+    <script>
+        ScrollReveal().reveal('.stat-card', {
+            delay: 200,
+            distance: '20px',
+            origin: 'bottom',
+            interval: 100
+        });
+
+        ScrollReveal().reveal('.terminal-window', {
+            delay: 300,
+            distance: '30px',
+            origin: 'left',
+            duration: 1000
+        });
+    </script>
+</body>
+
+</html>
