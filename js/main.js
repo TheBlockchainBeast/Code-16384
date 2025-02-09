@@ -26,9 +26,9 @@ function formatNumber(num) {
 
 // API Endpoints
 const ENDPOINTS = {
-    burned: 'https://api.etherscan.io/api?module=account&action=tokenbalance&contractaddress=0xCdf1AEDae5Fabf30067F69D8Bff95e803ec9Fa0a&address=0x000000000000000000000000000000000000dead&tag=latest&apikey=DSM6BP2F8BDKUZKDA399CWQ2HBN8N16S8K',
-    lp: 'https://api.etherscan.io/api?module=account&action=tokenbalance&contractaddress=0xCdf1AEDae5Fabf30067F69D8Bff95e803ec9Fa0a&address=0xEbf799B6c0e33450FA76e42F1cc4210D7D90F21f&tag=latest&apikey=DSM6BP2F8BDKUZKDA399CWQ2HBN8N16S8K',
-    honeypot: 'https://api.honeypot.is/v2/IsHoneypot?address=0xCdf1AEDae5Fabf30067F69D8Bff95e803ec9Fa0a'
+    burned: 'https://api.etherscan.io/api?module=account&action=tokenbalance&contractaddress=0x829d6165C7d698337E5373E4C1Ff00d90a2C4Ee0&address=0x000000000000000000000000000000000000dead&tag=latest&apikey=DSM6BP2F8BDKUZKDA399CWQ2HBN8N16S8K',
+    lp: 'https://api.etherscan.io/api?module=account&action=tokenbalance&contractaddress=0x829d6165C7d698337E5373E4C1Ff00d90a2C4Ee0&address=0xEbf799B6c0e33450FA76e42F1cc4210D7D90F21f&tag=latest&apikey=DSM6BP2F8BDKUZKDA399CWQ2HBN8N16S8K',
+    honeypot: 'https://api.honeypot.is/v2/IsHoneypot?address=0x829d6165C7d698337E5373E4C1Ff00d90a2C4Ee0'
 };
 
 // Function to update stats
@@ -70,6 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
     addLoadingAnimation();
     createMatrixBackground();
     initializeTerminal();
+    initializeLaunchSequence();
 });
 
 // Smooth scroll for navigation
@@ -228,4 +229,21 @@ setInterval(updateAllStats, 30000);
 document.addEventListener('DOMContentLoaded', () => {
     updateAllStats();
     setInterval(updateTerminalTime, 1000);
-}); 
+});
+
+function initializeLaunchSequence() {
+    const launchText = document.getElementById('launchText');
+    if (launchText) {
+        const lines = launchText.innerHTML.split('<br>');
+        launchText.innerHTML = '';
+
+        lines.forEach((line, index) => {
+            setTimeout(() => {
+                launchText.innerHTML += line + '<br>';
+                if (index === lines.length - 1) {
+                    launchText.innerHTML += '<span class="cursor"></span>';
+                }
+            }, index * 1000);
+        });
+    }
+} 
